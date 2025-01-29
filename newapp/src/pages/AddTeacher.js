@@ -63,7 +63,7 @@ function AddTeacher() {
       // eslint-disable-next-line no-unused-vars
       // const response = 
       await axios.post(`${baseUrl}teacher/`, payload);
-      Swal.fire("Success", `Teacher added successfully.`, "success");
+      Swal.fire("Success", "Teacher added successfully.", "success");
   
       // Reset the form
       setTeacherData({

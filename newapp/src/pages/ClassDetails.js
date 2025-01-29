@@ -39,7 +39,7 @@ function SubjectDetails() {
                 Swal.fire("Updated!", "Subject has been updated.", "success");
             } else {
                 // Add new subject
-                await axios.post(`${baseUrl}subjects/`, formData);
+                const response = await axios.post(`${baseUrl}subjects/`, formData);
                 setSubjects((prev) => [...prev, response.data]);
                 Swal.fire("Success!", "Subject has been added.", "success");
             }

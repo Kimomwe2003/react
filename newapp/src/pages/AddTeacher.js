@@ -21,7 +21,7 @@ function AddTeacher() {
   useEffect(() => {
     const fetchGrades = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/grade/`);
+        const response = await axios.get(`${baseUrl}grade/`);
         setGrades(response.data);
       } catch (err) {
         setError("Failed to load grades. Please try again later.");
@@ -60,8 +60,9 @@ function AddTeacher() {
   
     try {
       setLoading(true);
-      const response = await axios.post(`${baseUrl}/teacher/`, payload);
-      Swal.fire("Success", "Teacher added successfully.", "success");
+      // eslint-disable-next-line no-unused-vars
+      const response = await axios.post(`${baseUrl}teacher/`, payload);
+      Swal.fire("Success", `Teacher "${response.data.first_name}" added successfully.`, "success");
   
       // Reset the form
       setTeacherData({

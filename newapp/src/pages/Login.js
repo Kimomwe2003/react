@@ -23,7 +23,7 @@ const Login = () => {
         setIsLoading(true);
         setError('');
         try {
-            const response = await axios.post(`${baseUrl}/login/`, { username, password });
+            const response = await axios.post(`${baseUrl}login/`, { username, password });
             const { access, refresh, user } = response.data;
     
             // Store tokens in localStorage

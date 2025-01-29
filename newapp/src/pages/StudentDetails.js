@@ -17,7 +17,7 @@ function StudentDetails() {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/students/`);
+                const response = await axios.get(`${baseUrl}students/`);
                 setStudents(response.data);
             } catch (err) {
                 setError("Error fetching student details.");
@@ -29,7 +29,7 @@ function StudentDetails() {
 
         const fetchGrades = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/grade/`);
+                const response = await axios.get(`${baseUrl}grade/`);
                 setGrades(response.data);
             } catch (err) {
                 console.error(err);
@@ -46,12 +46,12 @@ function StudentDetails() {
         try {
             if (selectedStudent) {
                 // Update existing student
-                await axios.put(`${baseUrl}/students/${selectedStudent.id}/`, formData);
+                await axios.put(`${baseUrl}students/${selectedStudent.id}/`, formData);
                 setStudents((prev) => prev.map((student) => (student.id === selectedStudent.id ? { ...student, ...formData } : student)));
                 Swal.fire("Updated!", "Student details have been updated.", "success");
             } else {
                 // Add new student
-                const response = await axios.post(`${baseUrl}/students/`, formData);
+                const response = await axios.post(`${baseUrl}students/`, formData);
                 setStudents((prev) => [...prev, response.data]);
                 Swal.fire("Success!", "Student has been added.", "success");
             }
@@ -77,7 +77,7 @@ function StudentDetails() {
 
         if (result.isConfirmed) {
             try {
-                await axios.delete(`${baseUrl}/students/${id}/`);
+                await axios.delete(`${baseUrl}students/${id}/`);
                 setStudents((prev) => prev.filter((student) => student.id !== id));
                 Swal.fire("Deleted!", "Student has been deleted.", "success");
             } catch (err) {

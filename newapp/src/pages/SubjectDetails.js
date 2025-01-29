@@ -17,7 +17,7 @@ function SubjectDetails() {
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/subjects/`); // Adjust endpoint as necessary
+                const response = await axios.get(`${baseUrl}subjects/`); // Adjust endpoint as necessary
                 setSubjects(response.data); // Assuming response data is an array of subjects
             } catch (err) {
                 setError("Error fetching subject details.");
@@ -48,7 +48,7 @@ function SubjectDetails() {
 
         if (result.isConfirmed) {
             try {
-                await axios.delete(`${baseUrl}/subjects/${id}/`); // Adjust endpoint as necessary
+                await axios.delete(`${baseUrl}subjects/${id}/`); // Adjust endpoint as necessary
                 setSubjects((prev) => prev.filter((subject) => subject.id !== id));
                 Swal.fire("Deleted!", "Your subject has been deleted.", "success");
             } catch (err) {
@@ -59,7 +59,7 @@ function SubjectDetails() {
 
     const handleSave = async () => {
         try {
-            await axios.put(`${baseUrl}/subjects/${selectedSubject.id}/`, selectedSubject); // Adjust endpoint as necessary
+            await axios.put(`${baseUrl}subjects/${selectedSubject.id}/`, selectedSubject); // Adjust endpoint as necessary
             setSubjects((prev) => prev.map((subject) => (subject.id === selectedSubject.id ? selectedSubject : subject)));
             setModalVisible(false);
             Swal.fire("Updated!", "Your subject has been updated.", "success");

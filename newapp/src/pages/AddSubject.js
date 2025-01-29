@@ -13,7 +13,7 @@ function AddSubject() {
     useEffect(() => {
         const fetchGrades = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/grade/`); // Adjust endpoint as necessary
+                const response = await axios.get(`${baseUrl}grade/`); // Adjust endpoint as necessary
                 setGradeOptions(response.data); // Assuming response data is an array of grades
             } catch (err) {
                 console.error(err);
@@ -27,13 +27,13 @@ function AddSubject() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${baseUrl}/subjects/`, {
+            const response = await axios.post(`${baseUrl}subjects/`, {
                 name,
                 grade: selectedGrade,
             });
 
             // Notify the user of success
-            Swal.fire("Success!", "Subject has been added.", "success");
+            Swal.fire("Success!", ` The subject "${response.data.name}." `, "success");
 
             // Clear the form fields
             setName("");

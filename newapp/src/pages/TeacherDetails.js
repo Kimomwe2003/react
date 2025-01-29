@@ -25,10 +25,10 @@ function TeacherDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const teacherResponse = await axios.get(`${baseUrl}/teacher/`);
+        const teacherResponse = await axios.get(`${baseUrl}teacher/`);
         setTeachers(teacherResponse.data);
 
-        const gradeResponse = await axios.get(`${baseUrl}/grade/`); // Fetch grades
+        const gradeResponse = await axios.get(`${baseUrl}grade/`); // Fetch grades
         setGrades(gradeResponse.data);
       } catch (err) {
         setError("Error fetching data.");
@@ -53,7 +53,7 @@ function TeacherDetails() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`${baseUrl}/teacher/${id}/`);
+          await axios.delete(`${baseUrl}teacher/${id}/`);
           setTeachers((prevTeachers) => prevTeachers.filter((t) => t.id !== id));
           Swal.fire("Deleted!", "The teacher has been deleted.", "success");
         } catch (err) {
@@ -66,7 +66,7 @@ function TeacherDetails() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`${baseUrl}/teacher/${selectedTeacher.id}/`, selectedTeacher);
+      await axios.put(`${baseUrl}teacher/${selectedTeacher.id}/`, selectedTeacher);
       setTeachers((prevTeachers) =>
         prevTeachers.map((t) =>
           t.id === selectedTeacher.id ? { ...t, ...selectedTeacher } : t

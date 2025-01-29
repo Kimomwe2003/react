@@ -16,10 +16,10 @@ function Home() {
                     classesResponse,
                     subjectsResponse
                 ] = await Promise.all([
-                    axios.get(`${baseUrl}/teacher/`),
-                    axios.get(`${baseUrl}/students/`),
-                    axios.get(`${baseUrl}/grade/`),
-                    axios.get(`${baseUrl}/subjects/`)
+                    axios.get(`${baseUrl}teacher/`),
+                    axios.get(`${baseUrl}students/`),
+                    axios.get(`${baseUrl}grade/`),
+                    axios.get(`${baseUrl}subjects/`)
                 ]);
 
                 setData({
@@ -49,7 +49,7 @@ function Home() {
                             </div>
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
-                                    <li className="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>
                                     <li className="breadcrumb-item active">Dashboard v1</li>
                                 </ol>
                             </div>

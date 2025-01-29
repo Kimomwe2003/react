@@ -16,7 +16,7 @@ function SubjectDetails() {
     useEffect(() => {
         const fetchSubjects = async () => {
             try {
-                const response = await axios.get(`${baseUrl}/subjects/`); // Adjust endpoint as necessary
+                const response = await axios.get(`${baseUrl}subjects/`); // Adjust endpoint as necessary
                 setSubjects(response.data);
             } catch (err) {
                 setError("Error fetching subject details.");
@@ -34,12 +34,12 @@ function SubjectDetails() {
         try {
             if (selectedSubject) {
                 // Update existing subject
-                await axios.put(`${baseUrl}/subjects/${selectedSubject.id}/`, formData);
+                await axios.put(`${baseUrl}subjects/${selectedSubject.id}/`, formData);
                 setSubjects((prev) => prev.map((subject) => (subject.id === selectedSubject.id ? { ...subject, ...formData } : subject)));
                 Swal.fire("Updated!", "Subject has been updated.", "success");
             } else {
                 // Add new subject
-                const response = await axios.post(`${baseUrl}/subjects/`, formData);
+                const response = await axios.post(`${baseUrl}subjects/`, formData);
                 setSubjects((prev) => [...prev, response.data]);
                 Swal.fire("Success!", "Subject has been added.", "success");
             }
@@ -65,7 +65,7 @@ function SubjectDetails() {
 
         if (result.isConfirmed) {
             try {
-                await axios.delete(`${baseUrl}/subjects/${id}/`);
+                await axios.delete(`${baseUrl}subjects/${id}/`);
                 setSubjects((prev) => prev.filter((subject) => subject.id !== id));
                 Swal.fire("Deleted!", "Subject has been deleted.", "success");
             } catch (err) {

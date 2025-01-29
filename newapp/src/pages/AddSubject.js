@@ -27,13 +27,13 @@ function AddSubject() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${baseUrl}subjects/`, {
+            await axios.post(`${baseUrl}subjects/`, {
                 name,
                 grade: selectedGrade,
             });
 
             // Notify the user of success
-            Swal.fire("Success!", ` The subject "${response.data.name}." `, "success");
+            Swal.fire("Success!", "The SUbject is added successfully", "success");
 
             // Clear the form fields
             setName("");

@@ -5,50 +5,50 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 
 const baseUrl = process.env.REACT_APP_BACKEND_URL;
 
-function SubjectDetails() {
-    const [subjects, setSubjects] = useState([]);
+function ClassDetails() {
+    const [grades, setGrades] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [formData, setFormData] = useState({ name: "", school: "" });
-    const [selectedSubject, setSelectedSubject] = useState(null);
+    const [formData, setFormData] = useState({ name: "", level: "" });
+    const [selectedGrade, setSelectedGrade] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
-        const fetchSubjects = async () => {
+        const fetchGrades = async () => {
             try {
-                const response = await axios.get(`${baseUrl}subjects/`); // Adjust endpoint as necessary
-                setSubjects(response.data);
+                const response = await axios.get(`${baseUrl}grade/`); // Adjust endpoint as necessary
+                setGrades(response.data);
             } catch (err) {
-                setError("Error fetching subject details.");
+                setError("Error fetching class details.");
                 console.error(err);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchSubjects();
+        fetchGrades();
     }, []);
 
     const handleAddOrUpdate = async (e) => {
         e.preventDefault();
         try {
-            if (selectedSubject) {
-                // Update existing subject
-                await axios.put(`${baseUrl}subjects/${selectedSubject.id}/`, formData);
-                setSubjects((prev) => prev.map((subject) => (subject.id === selectedSubject.id ? { ...subject, ...formData } : subject)));
-                Swal.fire("Updated!", "Subject has been updated.", "success");
+            if (selectedGrade) {
+                // Update existing class
+                await axios.put(`${baseUrl}grade/${selectedGrade.id}/`, formData);
+                setGrades((prev) => prev.map((grade) => (grade.id === selectedGrade.id ? { ...grade, ...formData } : grade)));
+                Swal.fire("Updated!", "Class has been updated.", "success");
             } else {
-                // Add new subject
-                const response = await axios.post(`${baseUrl}subjects/`, formData);
-                setSubjects((prev) => [...prev, response.data]);
-                Swal.fire("Success!", "Subject has been added.", "success");
+                // Add new class
+                const response = await axios.post(`${baseUrl}grade/`, formData);
+                setGrades((prev) => [...prev, response.data]);
+                Swal.fire("Success!", "Class has been added.", "success");
             }
             setModalVisible(false);
-            setFormData({ name: "", school: "" });
-            setSelectedSubject(null);
+            setFormData({ name: "", level: "" });
+            setSelectedGrade(null);
         } catch (err) {
             console.error(err);
-            Swal.fire("Error!", "There was an error saving the subject.", "error");
+            Swal.fire("Error!", "There was an error saving the class.", "error");
         }
     };
 
@@ -65,18 +65,18 @@ function SubjectDetails() {
 
         if (result.isConfirmed) {
             try {
-                await axios.delete(`${baseUrl}subjects/${id}/`);
-                setSubjects((prev) => prev.filter((subject) => subject.id !== id));
-                Swal.fire("Deleted!", "Subject has been deleted.", "success");
+                await axios.delete(`${baseUrl}grade/${id}/`);
+                setGrades((prev) => prev.filter((grade) => grade.id !== id));
+                Swal.fire("Deleted!", "Class has been deleted.", "success");
             } catch (err) {
-                Swal.fire("Error!", "There was an error deleting the subject.", "error");
+                Swal.fire("Error!", "There was an error deleting the class.", "error");
             }
         }
     };
 
-    const openModal = (subject) => {
-        setSelectedSubject(subject);
-        setFormData(subject ? { ...subject } : { name: "", school: "" });
+    const openModal = (grade) => {
+        setSelectedGrade(grade);
+        setFormData(grade ? { ...grade } : { name: "", level: "" });
         setModalVisible(true);
     };
 
@@ -92,9 +92,9 @@ function SubjectDetails() {
         <div className="content-wrapper">
             <div className="container mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h1 className="text-center mb-4">Subject Details</h1>
+                    <h1 className="text-center mb-4">Class Details</h1>
                     <button className="btn btn-success" onClick={() => openModal(null)}>
-                        <i className="fas fa-plus"></i> Add Subject
+                        <i className="fas fa-plus"></i> Add Class
                     </button>
                 </div>
                 <table className="table table-striped table-bordered">
@@ -102,26 +102,26 @@ function SubjectDetails() {
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>School</th>
+                            <th>Level</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {subjects.length === 0 ? (
+                        {grades.length === 0 ? (
                             <tr>
-                                <td colSpan="4" className="text-center">No subjects found.</td>
+                                <td colSpan="4" className="text-center">No classes found.</td>
                             </tr>
                         ) : (
-                            subjects.map((subject) => (
-                                <tr key={subject.id}>
-                                    <td>{subject.id}</td>
-                                    <td>{subject.name}</td>
-                                    <td>{subject.school}</td>
+                            grades.map((grade) => (
+                                <tr key={grade.id}>
+                                    <td>{grade.id}</td>
+                                    <td>{grade.name}</td>
+                                    <td>{grade.level}</td>
                                     <td>
-                                        <button className="btn btn-primary btn-sm me-2" onClick={() => openModal(subject)}>
+                                        <button className="btn btn-primary btn-sm me-2" onClick={() => openModal(grade)}>
                                             <i className="fas fa-edit"></i> Update
                                         </button>
-                                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(subject.id)}>
+                                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(grade.id)}>
                                             <i className="fas fa-trash"></i> Delete
                                         </button>
                                     </td>
@@ -131,13 +131,13 @@ function SubjectDetails() {
                     </tbody>
                 </table>
 
-                {/* Modal for Adding/Updating Subject */}
+                {/* Modal for Adding/Updating Class */}
                 {modalVisible && (
                     <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title">{selectedSubject ? "Update Subject" : "Add Subject"}</h5>
+                                    <h5 className="modal-title">{selectedGrade ? "Update Class" : "Add Class"}</h5>
                                     <button type="button" className="close" onClick={() => setModalVisible(false)}>&times;</button>
                                 </div>
                                 <div className="modal-body">
@@ -154,18 +154,18 @@ function SubjectDetails() {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label>School</label>
+                                            <label>Level</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                name="school"
-                                                value={formData.school}
-                                                onChange={(e) => setFormData({ ...formData, school: e.target.value })}
+                                                name="level"
+                                                value={formData.level}
+                                                onChange={(e) => setFormData({ ...formData, level: e.target.value })}
                                                 required
                                             />
                                         </div>
                                         <button type="submit" className="btn btn-primary">
-                                            {selectedSubject ? "Update Subject" : "Add Subject"}
+                                            {selectedGrade ? "Update Class" : "Add Class"}
                                         </button>
                                     </form>
                                 </div>
@@ -178,4 +178,4 @@ function SubjectDetails() {
     );
 }
 
-export default SubjectDetails;
+export default ClassDetails;
